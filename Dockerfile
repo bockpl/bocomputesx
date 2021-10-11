@@ -1,4 +1,4 @@
-FROM bockpl/bocomputes:v2.0.2
+FROM bockpl/bocomputes:v2.0.2.1
 LABEL maintainer="pawel.adamczyk.1@p.lodz.pl"
 
 ARG SRVDIR=/srv
@@ -15,8 +15,12 @@ RUN sed -i 's/tsflags=nodocs/# &/' /etc/yum.conf
 # Szukanie zalznosci w yum
 # yum whatprovides '*/libICE.so.6*'
 
+RUN yum --enablerepo=base clean metadata
+
 # Instalacja/kompilacja noVNC
 RUN cd /tmp && \
+    yum --enablerepo=base clean metadata && \
+    yum --enablerepo=updates clean metadata && \
     yum install -y \
         wget \
         make \
@@ -72,9 +76,16 @@ RUN  yum install -y \
 RUN cd /tmp && \
     yum install -y perl && \
     yum install -y wget && \
-    wget ${SOURCEFORGE}/turbovnc/files/${TURBOVNC_VERSION}/turbovnc-${TURBOVNC_VERSION}.x86_64.rpm && \
-    wget ${SOURCEFORGE}/libjpeg-turbo/files/${LIBJPEG_VERSION}/libjpeg-turbo-official-${LIBJPEG_VERSION}.x86_64.rpm && \
-    wget ${SOURCEFORGE}/virtualgl/files/${VIRTUALGL_VERSION}/VirtualGL-${VIRTUALGL_VERSION}.x86_64.rpm && \
+    rm -f /tmp/*.rpm && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
+RUN cd /tmp && \
+    yum install -y perl && \
+    yum install -y wget && \
+    wget --no-check-certificate ${SOURCEFORGE}/turbovnc/files/${TURBOVNC_VERSION}/turbovnc-${TURBOVNC_VERSION}.x86_64.rpm && \
+    wget --no-check-certificate ${SOURCEFORGE}/libjpeg-turbo/files/${LIBJPEG_VERSION}/libjpeg-turbo-official-${LIBJPEG_VERSION}.x86_64.rpm && \
+    wget --no-check-certificate ${SOURCEFORGE}/virtualgl/files/${VIRTUALGL_VERSION}/VirtualGL-${VIRTUALGL_VERSION}.x86_64.rpm && \
     rpm -i *.rpm && \
     mv /opt/* ${SRVDIR}/ && \
     cp ${SRVDIR}/TurboVNC/bin/vncserver ${SRVDIR}/TurboVNC/bin/vncserver.org && \
