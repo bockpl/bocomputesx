@@ -92,6 +92,8 @@ RUN sed -i '/<Filename>exo-mail-reader.desktop<\/Filename>/d' /etc/xdg/menus/xfc
 
 ENV PATH ${PATH}:${SRVDIR}/VirtualGL/bin:${SRVDIR}/TurboVNC/bin
 
+# korekta gosu
+RUN chmod 755 /usr/local/bin/gosu
 
 # Poprawiony plik index.html w noVNC, dodaje sciezke proxowania dla klienta noVNC
 ADD index.html ${SRVDIR}/noVNC/index.html
