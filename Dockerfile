@@ -1,4 +1,4 @@
-FROM bockpl/bocomputes:v2.0.1
+FROM bockpl/bocomputes:v2.0.1.1
 LABEL maintainer="pawel.adamczyk.1@p.lodz.pl"
 
 ARG SRVDIR=/srv
@@ -72,9 +72,9 @@ RUN  yum install -y \
 RUN cd /tmp && \
     yum install -y perl && \
     yum install -y wget && \
-    wget ${SOURCEFORGE}/turbovnc/files/${TURBOVNC_VERSION}/turbovnc-${TURBOVNC_VERSION}.x86_64.rpm && \
-    wget ${SOURCEFORGE}/libjpeg-turbo/files/${LIBJPEG_VERSION}/libjpeg-turbo-official-${LIBJPEG_VERSION}.x86_64.rpm && \
-    wget ${SOURCEFORGE}/virtualgl/files/${VIRTUALGL_VERSION}/VirtualGL-${VIRTUALGL_VERSION}.x86_64.rpm && \
+    wget --no-check-certificate ${SOURCEFORGE}/turbovnc/files/${TURBOVNC_VERSION}/turbovnc-${TURBOVNC_VERSION}.x86_64.rpm && \
+    wget --no-check-certificate ${SOURCEFORGE}/libjpeg-turbo/files/${LIBJPEG_VERSION}/libjpeg-turbo-official-${LIBJPEG_VERSION}.x86_64.rpm && \
+    wget --no-check-certificate ${SOURCEFORGE}/virtualgl/files/${VIRTUALGL_VERSION}/VirtualGL-${VIRTUALGL_VERSION}.x86_64.rpm && \
     rpm -i *.rpm && \
     mv /opt/* ${SRVDIR}/ && \
     cp ${SRVDIR}/TurboVNC/bin/vncserver ${SRVDIR}/TurboVNC/bin/vncserver.org && \
