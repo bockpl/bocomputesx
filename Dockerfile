@@ -94,6 +94,7 @@ ENV PATH ${PATH}:${SRVDIR}/VirtualGL/bin:${SRVDIR}/TurboVNC/bin
 
 # korekta gosu
 RUN chmod 755 /usr/local/bin/gosu
+ADD module.sh /etc/profile.d/
 
 # Poprawiony plik index.html w noVNC, dodaje sciezke proxowania dla klienta noVNC
 ADD index.html ${SRVDIR}/noVNC/index.html
