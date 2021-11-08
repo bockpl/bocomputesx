@@ -64,7 +64,9 @@ RUN  yum install -y \
         libglvnd-glx-1.0.1-0.8.git5baa1e5.el7.x86_64 \
         mesa-libGLU-9.0.0-4.el7.x86_64 \
         libXv-1.0.11-1.el7.x86_64 \
-        libXtst-1.2.3-1.el7.x86_64 && \
+        libXtst-1.2.3-1.el7.x86_64 \
+        docker \
+        singularity && \
      yum clean all && \
      rm -rf /var/cache/yum
 
